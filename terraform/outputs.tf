@@ -1,8 +1,8 @@
-locals {
-  network_interface = google_compute_instance.instance.network_interface[0]
-  instance_nat_ip   = length(local.network_interface.access_config) > 0 ? local.network_interface.access_config[0].nat_ip : null
-  instance_ip       = coalesce(local.instance_nat_ip, local.network_interface.network_ip)
-}
+# locals {
+#   network_interface = google_compute_instance.instance.network_interface[0]
+#   instance_nat_ip   = length(local.network_interface.access_config) > 0 ? local.network_interface.access_config[0].nat_ip : null
+#   instance_ip       = coalesce(local.instance_nat_ip, local.network_interface.network_ip)
+# }
 
 # output "site_url" {
 #   description = "Site Url"
