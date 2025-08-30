@@ -43,12 +43,12 @@ output "instance_machine_type" {
   value       = var.machine_type
 }
 
-output "instance_nat_ip" {
-  description = "External IP of the compute instance."
-  value       = local.instance_nat_ip
-}
+# output "instance_nat_ip" {
+#   description = "External IP of the compute instance."
+#   value       = local.instance_nat_ip
+# }
 
-output "instance_network" {
-  description = "Self-link for the network of the compute instance."
-  value       = var.networks[0]
-}
+# output "instance_network" {
+#   description = "Self-link for the network of the compute instance."
+#   value       = var.networks[0]
+# }
