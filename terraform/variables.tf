@@ -7,7 +7,7 @@ variable "project_id" {
 variable "goog_cm_deployment_name" {
   description = "The name of the deployment and VM instance."
   type        = string
-  default     = "ibc-ghack-norsk-streams"
+  default     = "norsk-streams"
 }
 
 variable "source_image" {
