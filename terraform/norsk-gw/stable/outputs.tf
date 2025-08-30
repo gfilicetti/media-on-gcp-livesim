@@ -18,6 +18,17 @@ output "named_ports" {
   value       = module.norsk_gw.named_ports
 }
 
+output "admin_user" {
+  description = "Username for Admin."
+  value       = "norsk-studio-admin"
+}
+
+output "admin_password" {
+  description = "Password for Admin."
+  value       = random_password.admin.result
+  sensitive   = true
+}
+
 # output "port" {
 #   description = "The port for the Norsk GW instance group."
 #   value       = module.norsk_gw.port
@@ -27,14 +38,3 @@ output "named_ports" {
 #   description = "The port name for the Norsk GW instance group."
 #   value       = module.norsk_gw.port_name
 # }
-
-output "admin_user" {
-  description = "Username for Admin."
-  value       = "norsk-studio-admin"
-}
-
-output "admin_password" {
-  description = "Password for Admin."
-  value       = "Hackfest@IBC"
-  sensitive   = true
-}

@@ -10,13 +10,13 @@ output "site_url" {
 }
 
 output "admin_user" {
-  description = "Username for Admin password."
-  value       = "norsk-studio-admin"
+  description = "Norsk admin username."
+  value       = module.norsk_gw.admin_user
 }
 
 output "admin_password" {
-  description = "Password for Admin."
-  value       = random_password.admin.result
+  description = "Norsk admin password."
+  value       = module.norsk_gw.admin_password
   sensitive   = true
 }
 
