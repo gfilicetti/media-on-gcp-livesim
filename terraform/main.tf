@@ -1,12 +1,3 @@
-provider "google" {
-  project = var.project_id
-  # This applies to all resources that take labels, e.g. instance
-  # https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference#default_labels-1
-  # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance#labels-1
-  default_labels = {
-  }
-}
-
 locals {
   network_interfaces = [for i, n in var.networks : {
     network     = n,
@@ -20,6 +11,10 @@ locals {
     name   = data.google_project.project.name
     number = data.google_project.project.number
   }
+}
+
+data "google_project" "project" {
+  project_id = var.project_id
 }
 
 resource "google_project_service" "compute_api" {
