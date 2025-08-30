@@ -4,9 +4,17 @@ locals {
   instance_ip       = coalesce(local.instance_nat_ip, local.network_interface.network_ip)
 }
 
-output "site_url" {
-  description = "Site Url"
-  value       = "https://${local.instance_ip}/studio/"
+# output "site_url" {
+#   description = "Site Url"
+#   value       = "https://${local.instance_ip}/studio/"
+# }
+
+output "external_ips" {
+  description = "A list of external IP addresses for the Norsk Gateway instances."
+  value = [
+    for ni in flatten(module.norsk_gw.network_interfaces) : one(ni.access_config).nat_ip
+    if length(ni.access_config) > 0
+  ]
 }
 
 output "admin_user" {
