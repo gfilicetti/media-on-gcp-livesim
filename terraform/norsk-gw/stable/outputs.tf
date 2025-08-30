@@ -1,6 +1,6 @@
 output "network_interfaces" {
   description = "The list of network interfaces configured for the Norsk Gateway instances, passed through from the compute module."
-  value       = module.compute.network_interfaces
+  value       = module.norsk_gw.network_interfaces
 }
 
 output "instance_group_manager_instance_group" {
