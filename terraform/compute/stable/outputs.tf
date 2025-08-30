@@ -1,6 +1,6 @@
 output "network_interfaces" {
-  description = "The list of network interfaces configured for the instances."
-  value       = local.network_interfaces
+  description = "The list of network interfaces from the instance template."
+  value       = google_compute_instance_template.instance_template.network_interface
 }
 
 output "instance_group_manager_instance_group" {
@@ -25,20 +25,10 @@ output "named_ports" {
 
 output "port" {
   description = "The first port from the list of named ports."
-  value       = length(var.named_ports) > 0 ? var.named_ports : null
+  value       = length(var.named_ports) > 0 ? var.named_ports[0].port : null
 }
 
 output "port_name" {
   description = "The first port name from the list of named ports."
-  value       = length(var.named_ports) > 0 ? var.named_ports : null
+  value       = length(var.named_ports) > 0 ? var.named_ports[0].name : null
 }
-
-# output "port" {
-#   description = "The first port from the list of named ports."
-#   value       = length(var.named_ports) > 0 ? var.named_ports[0].port : null
-# }
-
-# output "port_name" {
-#   description = "The first port name from the list of named ports."
-#   value       = length(var.named_ports) > 0 ? var.named_ports[0].name : null
-# }
