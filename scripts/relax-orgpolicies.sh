@@ -37,6 +37,6 @@ declare -a policies=(
 
 for policy in "${policies[@]}"
 do
-    gcloud org-policies reset $policy --project=$PROJEct
+    gcloud org-policies reset $policy --project=$PROJECT
 done
 
