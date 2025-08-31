@@ -35,6 +35,10 @@ declare -a policies=(
     # "constraints/resourcemanager.allowedExportDestinations"
 )
 
+# First enable the orgpolicy API
+gcloud services enable "orgpolicy.googleapis.com" --project $PROJECT
+
+# Now relax the policies
 for policy in "${policies[@]}"
 do
     gcloud org-policies reset $policy --project=$PROJECT
