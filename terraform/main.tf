@@ -22,8 +22,21 @@ resource "google_project_service" "compute_api" {
   disable_on_destroy = false
 }
 
+# 5 VMs for the Gateway
 module "norsk_gw" {
   source = "./norsk-gw/stable"
+
+  project_id = local.project.id
+  region     = var.region
+  zone       = var.zone
+  instance_count = var.instance_count
+
+  networks = [module.vpc.network_name]
+}
+
+# 5 VMs for the Live Simulators
+module "norsk_livesim" {
+  source = "./norsk-livesim/stable"
 
   project_id = local.project.id
   region     = var.region
