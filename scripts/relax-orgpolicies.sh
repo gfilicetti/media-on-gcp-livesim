@@ -13,6 +13,7 @@ PROJECT=${1:-`gcloud config get-value project`}
 
 declare -a policies=(
     "constraints/compute.vmExternalIpAccess"
+    "constraints/compute.trustedImageProjects"
     # "constraints/compute.disableNestedVirtualization"
     # "constraints/compute.disableSerialPortAccess"
     # "constraints/compute.disableVpcExternalIpv6"
@@ -24,7 +25,6 @@ declare -a policies=(
     # "constraints/compute.restrictVpnPeerIPs"
     # "constraints/compute.skipDefaultNetworkCreation"
     # "constraints/compute.storageResourceUseRestrictions"
-    # "constraints/compute.trustedImageProjects"
     # "constraints/compute.vmCanIpForward"
     # "constraints/essentialcontacts.allowedContactDomains"
     # "constraints/iam.allowedPolicyMemberDomains"

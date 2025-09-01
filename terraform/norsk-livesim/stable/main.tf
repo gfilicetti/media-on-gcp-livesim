@@ -3,8 +3,8 @@ module "compute" {
 
   project_id           = var.project_id
   region               = var.region
-  instance_group_name  = "norsk-gw-mig"
-  base_instance_name   = "norsk-gw"
+  instance_group_name  = "norsk-livesim-mig"
+  base_instance_name   = "norsk-livesim"
   target_size          = var.instance_count
   machine_type         = var.machine_type
   source_image         = var.source_image

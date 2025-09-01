@@ -9,69 +9,6 @@ module "vpc" {
   auto_create_subnetworks = true
 }
 
-# Load balancer
-# MIGHT BE NEEDED - Keep for now
-# module "gclb" {
-#   source = "./infra/gclb/stable"
-
-#   project_id = local.project.id
-#   region     = var.gcp_region
-
-#   network = module.vpc.network_self_link
-
-#   backend_services = {
-#     nea = {
-#       instance_group       = module.ateme.nea_instance_group_manager_instance_group
-#       port                 = module.ateme.nea_named_ports[0].port # 8080
-#       port_name            = module.ateme.nea_named_ports[0].name # http1
-#       protocol             = "HTTP"
-#       healthcheck_protocol = "tcp"
-#       enable_cdn           = false
-#     }
-#     # TODO: CDN is nea on port 80
-#     cdn = {
-#       instance_group       = module.ateme.nea_instance_group_manager_instance_group
-#       port                 = module.ateme.nea_named_ports[1].port # 80
-#       port_name            = module.ateme.nea_named_ports[1].name # http2
-#       protocol             = "HTTP"
-#       healthcheck_protocol = "tcp"
-#       enable_cdn           = true
-#     }
-#     titan = {
-#       instance_group       = module.ateme.titan_instance_group_manager_instance_group
-#       port                 = module.ateme.titan_named_ports[0].port # 443
-#       port_name            = module.ateme.titan_named_ports[0].name # https
-#       protocol             = "HTTPS"
-#       healthcheck_protocol = "tcp"
-#       enable_cdn           = false
-#     }
-#     darwin = {
-#       instance_group       = module.darwin.darwin_instance_group_manager_instance_group
-#       port                 = module.darwin.darwin_named_ports[0].port # 443
-#       port_name            = module.darwin.darwin_named_ports[0].name # https
-#       protocol             = "HTTPS"
-#       healthcheck_protocol = "tcp"
-#       enable_cdn           = false
-#     }
-#     "gemini" = {
-#       instance_group       = module.norsk_ai.instance_group_manager_instance_group
-#       port                 = module.norsk_ai.named_ports[0].port # 443
-#       port_name            = module.norsk_ai.named_ports[0].name # https
-#       protocol             = "HTTPS"
-#       healthcheck_protocol = "tcp"
-#       enable_cdn           = false
-#     }
-#     "norsk" = {
-#       instance_group       = module.norsk_gw.instance_group_manager_instance_group
-#       port                 = module.norsk_gw.named_ports[0].port # 443
-#       port_name            = module.norsk_gw.named_ports[0].name # https
-#       protocol             = "HTTPS"
-#       healthcheck_protocol = "tcp"
-#       enable_cdn           = false
-#     }
-#   }
-# }
-
 # General Firewall Rules
 
 # Punch a hole for internal VM to VM traffic
@@ -127,4 +64,51 @@ resource "google_compute_firewall" "fwr_http" {
   source_ranges = ["0.0.0.0/0"]
 }
 
-### NOTE: Norsk specific firewall rules are defined in norsk module
+### NOTE: These are Norsk specific firewall rules from here to the bottom
+resource "google_compute_firewall" "fwr_tcp_3478" {
+  count = var.enable_tcp_3478 ? 1 : 0
+
+  name    = "fwr-allow-norsk-tcp-3478"
+  network = module.vpc.network_self_link
+
+  allow {
+    ports    = ["3478"]
+    protocol = "tcp"
+  }
+
+  source_ranges = compact([for range in split(",", var.tcp_3478_source_ranges) : trimspace(range)])
+
+  target_tags = ["${var.goog_cm_deployment_name}-deployment"]
+}
+
+resource "google_compute_firewall" "fwr_udp_3478" {
+  count = var.enable_udp_3478 ? 1 : 0
+
+  name    = "fwr-allow-norsk-udp-3478"
+  network = module.vpc.network_self_link
+
+  allow {
+    ports    = ["3478"]
+    protocol = "udp"
+  }
+
+  source_ranges = compact([for range in split(",", var.udp_3478_source_ranges) : trimspace(range)])
+
+  target_tags = ["${var.goog_cm_deployment_name}-deployment"]
+}
+
+resource "google_compute_firewall" "fwr_udp_5001" {
+  count = var.enable_udp_5001 ? 1 : 0
+
+  name    = "fwr-allow-norsk-udp-5001"
+  network = module.vpc.network_self_link
+
+  allow {
+    ports    = ["5001"]
+    protocol = "udp"
+  }
+
+  source_ranges = compact([for range in split(",", var.udp_5001_source_ranges) : trimspace(range)])
+
+  target_tags = ["${var.goog_cm_deployment_name}-deployment"]
+}
