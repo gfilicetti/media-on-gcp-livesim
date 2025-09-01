@@ -64,4 +64,51 @@ resource "google_compute_firewall" "fwr_http" {
   source_ranges = ["0.0.0.0/0"]
 }
 
-### NOTE: Norsk specific firewall rules are defined in norsk module
+### NOTE: These are Norsk specific firewall rules from here to the bottom
+resource "google_compute_firewall" "fwr_tcp_3478" {
+  count = var.enable_tcp_3478 ? 1 : 0
+
+  name    = "fwr-allow-norsk-tcp-3478"
+  network = element(var.networks, 0)
+
+  allow {
+    ports    = ["3478"]
+    protocol = "tcp"
+  }
+
+  source_ranges = compact([for range in split(",", var.tcp_3478_source_ranges) : trimspace(range)])
+
+  target_tags = ["${var.goog_cm_deployment_name}-deployment"]
+}
+
+resource "google_compute_firewall" "fwr_udp_3478" {
+  count = var.enable_udp_3478 ? 1 : 0
+
+  name    = "fwr-allow-norsk-udp-3478"
+  network = element(var.networks, 0)
+
+  allow {
+    ports    = ["3478"]
+    protocol = "udp"
+  }
+
+  source_ranges = compact([for range in split(",", var.udp_3478_source_ranges) : trimspace(range)])
+
+  target_tags = ["${var.goog_cm_deployment_name}-deployment"]
+}
+
+resource "google_compute_firewall" "fwr_udp_5001" {
+  count = var.enable_udp_5001 ? 1 : 0
+
+  name    = "fwr-allow-norsk-udp-5001"
+  network = element(var.networks, 0)
+
+  allow {
+    ports    = ["5001"]
+    protocol = "udp"
+  }
+
+  source_ranges = compact([for range in split(",", var.udp_5001_source_ranges) : trimspace(range)])
+
+  target_tags = ["${var.goog_cm_deployment_name}-deployment"]
+}
