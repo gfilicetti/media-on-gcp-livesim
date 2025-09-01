@@ -69,7 +69,7 @@ resource "google_compute_firewall" "fwr_tcp_3478" {
   count = var.enable_tcp_3478 ? 1 : 0
 
   name    = "fwr-allow-norsk-tcp-3478"
-  network = element(var.networks, 0)
+  network = module.vpc.network_self_link
 
   allow {
     ports    = ["3478"]
@@ -85,7 +85,7 @@ resource "google_compute_firewall" "fwr_udp_3478" {
   count = var.enable_udp_3478 ? 1 : 0
 
   name    = "fwr-allow-norsk-udp-3478"
-  network = element(var.networks, 0)
+  network = module.vpc.network_self_link
 
   allow {
     ports    = ["3478"]
@@ -101,7 +101,7 @@ resource "google_compute_firewall" "fwr_udp_5001" {
   count = var.enable_udp_5001 ? 1 : 0
 
   name    = "fwr-allow-norsk-udp-5001"
-  network = element(var.networks, 0)
+  network = module.vpc.network_self_link
 
   allow {
     ports    = ["5001"]
