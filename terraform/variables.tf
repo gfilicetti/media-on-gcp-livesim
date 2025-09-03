@@ -133,8 +133,8 @@ variable "udp_3478_source_ranges" {
   default     = ""
 }
 
-variable "enable_udp_5001" {
-  description = "Allow UDP port 5001-5200 traffic (example SRT port) from the Internet"
+variable "enable_udp" {
+  description = "Allow UDP port 5100-5200 traffic (example SRT port) from the Internet"
   type        = bool
   default     = true
 }

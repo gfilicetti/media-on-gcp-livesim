@@ -97,14 +97,14 @@ resource "google_compute_firewall" "fwr_udp_3478" {
   target_tags = ["${var.goog_cm_deployment_name}-deployment"]
 }
 
-resource "google_compute_firewall" "fwr_udp_5001" {
-  count = var.enable_udp_5001 ? 1 : 0
+resource "google_compute_firewall" "fwr_udp" {
+  count = var.enable_udp ? 1 : 0
 
-  name    = "fwr-allow-norsk-udp-5001"
+  name    = "fwr-allow-norsk-udp"
   network = module.vpc.network_self_link
 
   allow {
-    ports    = ["5001"]
+    ports    = ["5100-5200"]
     protocol = "udp"
   }
 
