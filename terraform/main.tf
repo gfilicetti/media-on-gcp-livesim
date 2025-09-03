@@ -30,6 +30,7 @@ module "norsk_gw" {
   region     = var.region
   zone       = var.zone
   instance_count = var.instance_count
+  machine_type = vars.machine_type
   # add a static external IP
 
   networks = [module.vpc.network_name]

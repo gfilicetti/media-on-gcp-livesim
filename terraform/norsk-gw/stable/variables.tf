@@ -36,7 +36,6 @@ variable "source_image" {
 variable "machine_type" {
   description = "The machine type to create, e.g. e2-small"
   type        = string
-  default     = "n2d-standard-8"
 }
 
 variable "boot_disk_type" {
