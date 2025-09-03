@@ -30,11 +30,12 @@ module "norsk_gw" {
   region     = var.region
   zone       = var.zone
   instance_count = var.instance_count
+  # add a static external IP
 
   networks = [module.vpc.network_name]
 }
 
-# 5 VMs for the Live Simulators
+# 2 VMs for the Live Simulators
 module "norsk_livesim" {
   source = "./norsk-livesim/stable"
 
@@ -44,6 +45,8 @@ module "norsk_livesim" {
   instance_count = var.instance_count
 
   networks = [module.vpc.network_name]
+
+  # add a static external IP
 }
 
 
